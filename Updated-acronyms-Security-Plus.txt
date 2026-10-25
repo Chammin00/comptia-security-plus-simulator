@@ -1,0 +1,667 @@
+HSM- An HSM (Hardware Security Module) is often implemented as a highend
+cryptographic hardware appliance. HSMs are often used as secure
+storage for cryptographic keys.
+
+DLP-Scan outgoing traffic with DLP
+DLP (Data Loss Prevention) systems are designed to identify sensitive
+data transfers. If the DLP finds a data transfer with financial details,
+personal information, or other private information, the DLP can block the
+data transfer.
+
+
+TPM-A TPM (Trusted Platform Module) is part of a computer’s motherboard,
+and it’s specifically designed to assist and protect with cryptographic
+functions. Full disk encryption (FDE) can use the burned-in TPM keys
+to verify the local device hasn’t changed, and there are security features in
+the TPM to prevent brute-force or dictionary attacks against the full disk
+encryption login credentials.
+
+CRL- Maintains a copy of the CRL
+A CRL (Certificate Revocation List) is maintained by the Certificate
+Authority and is not part of the TPM.
+
+SIEM
+A SIEM (Security Information and Event Management) server is
+commonly used to consolidate and report on log files. A SIEM would not
+be able to control or limit network communication.
+
+
+ARO
+The ARO (Annualized Rate of Occurrence) describes the number of
+instances estimated to occur in a year. For example, if the organization
+expect to lose seven laptops to theft in a year, the ARO for laptop theft is
+
+ALE
+The ALE (Annual Loss Expectancy) is the expected cost for all events in a
+single year. If it costs $1,000 to replace a single laptop (the SLE) and you
+expect to lose seven laptops in a year (the ARO), the ALE for laptop theft
+is $7,000.
+
+SLE
+SLE (Single Loss Expectancy) is the monetary loss if a single event
+occurs. If one laptop is stolen, the cost to replace that single laptop is the
+SLE, or $1,000.
+
+ MTTR
+MTTR (Mean Time to Repair) is the time required to repair a product or
+system after a failure.
+
+OCSP- Online Certificate Status Protocol -
+The browser checks for a revoked certificates.
+
+MDM
+As a mobile device, a tablet will need integration with an MDM (Mobile
+Device Manager) and encryption of all data on the device. As an additional
+security feature, face recognition can provide additional authentication options
+using the built-in camera on the tablet.
+
+SPF
+Authenticate the server sending an email
+
+OSINT
+OSINT (Open Source Intelligence) describes the process of obtaining
+information from open sources such as social media sites, corporate
+websites, online forums, and other publicly available locations.
+
+Exfiltration
+Exfiltration describes the theft of data by an attacker.
+
+SDN
+SDN (Software-Defined Networking) separates the control plane of
+devices from the data plane. This allows for more automation and dynamic
+changes to the infrastructure
+
+DKIM record
+A DKIM (Domain Keys Identified Mail) record is a DNS (Domain
+Name System) entry that includes the public key associated with an email
+server's digital signatures. A legitimate email server will digitally sign all
+outgoing emails and provide the public key in their DNS for third-party validation.
+
+Salted hash
+A salted hash describes a hash value that includes some additional data
+(the salt) to provide randomization. A salted hash does not provide data
+confidentiality or encryption.
+
+NAC
+NAC (Network Access Control) is a broad term describing access control
+based on a health check or posture assessment. NAC will deny access to
+devices that don't meet the minimum security requirements
+
+
+MTBF
+The MTBF (Mean Time Between Failures) is the average time expected
+between outages. This is usually an estimation based on the internal device
+components and their expected operational lifetime.
+
+
+A. MTTR
+MTTR (Mean Time to Repair) is the time required to repair a product or
+system after a failure.
+
+B. RPO
+RPO (Recovery Point Objectives) define how much data loss would be
+acceptable during a recovery.
+C. RTO
+
+RTO (Recovery Time Objectives) define the minimum objectives required
+to get up and running to a particular service level.
+
+AAA
+Using AAA (Authentication, Authorization, and Accounting) is a
+common method of centralizing authentication. Instead of having separate
+local accounts on different devices, users can authenticate with account
+information maintained in a centralized database.
+
+
+A. COPE
+COPE (Corporate-owned, personally enabled) devices are purchased by
+the organization and enabled for both business and personal use. A COPE
+device does not provide any centralized authentication functionality.
+
+C. IPsec
+IPsec is commonly used as an encrypted tunnel between sites or endpoints.
+It’s useful for protecting data sent over the network, but IPsec isn’t used to
+centralize the authentication process.
+
+D. SIEM
+A SIEM (Security Information and Event Management) service provides
+centralized logging and reporting for network infrastructure devices. A
+SIEM service does not provide any centralized authentication features.
+
+Attestation
+Attestation is commonly one of the last steps when performing an audit.
+This attestation is an opinion of the truth or accuracy of a company’s
+security position.
+
+OCSP stapling
+The use of OCSP (Online Certificate Status Protocol) requires
+communication between the client and the issuing CA (Certificate
+Authority). If the CA is an external organization, then validation checks
+will communicate across the Internet. The certificate holder can verify
+their own status and avoid client Internet traffic by storing the status
+information on an internal server and “stapling” the OCSP status into the
+SSL/TLS handshake.
+
+Wildcard
+A wildcard certificate can be used across many different systems matching
+the fully qualified domain name associated with the wildcard.
+
+SCAP
+The SCAP (Security Content Automation Protocol) is used as a common
+protocol across multiple security tools. SCAP is not used to provide an
+encrypted tunnel between two locations.
+
+
+ Raid- Implement RAID for all storage systems
+RAID (Redundant Array of Independent Disks) is an important
+consideration for any project that stores data, but using a RAID array
+is not part of this compliance requirement. Although compliance may
+include backups, RAID is not a backup technology.
+
+UPS- Connect a UPS to all servers
+Integrating a UPS (Uninterruptible Power Supply) is an important way
+to maintain power during an outage, but it's not required for security
+compliance for data storage.
+
+ DNS -should be available on redundant servers
+Name resolution can be an important service on the network, but
+maintaining redundant DNS servers isn't required for compliance with
+sensitive data storage.
+
+DLP
+DLP (Data Loss Prevention) solutions can identify and block sensitive
+data from being sent over the network. DLP does not provide any
+additional security or protection for real-time financial transactions.
+
+NGFW
+An NGFW (Next-Generation Firewall) is an application-aware security
+technology. NGFW solutions can provide additional controls for specific
+applications, but they won't provide any additional account protections
+when sending financial details.
+
+
+WPA3 (Wi-Fi Protected Access 3) is an encryption protocol used on
+wireless networks. All data sent over a WPA3-protected wireless network
+will be encrypted
+.
+ 802.1X
+802.1X is a standard for authentication using AAA (Authentication,
+Authorization and Accounting) services. 802.1X is commonly used in
+conjunction with LDAP, RADIUS, or similar authentication services.
+
+ RADIUS
+RADIUS (Remote Authentication Dial-In User Service) is an
+authentication protocol used for centralized authentication. RADIUS
+is commonly used in conjunction with 802.1X, but RADIUS does not
+provide data confidentiality or encryption.
+
+MDM
+An MDM (Mobile Device Manager) is used to manage and control an
+organization's mobile phones and tablets. MDM policies are not used to
+manage the confidentiality settings of a wireless access point
+
+HTTPS- (Hypertext Transfer Protocol Secure) protocol
+will ensure that all network communication is encrypted between the web
+server and the client devices. A host-based firewall can be used to allow or
+disallow traffic from certain IP address ranges.
+
+WAF
+A WAF (Web Application Firewall) is designed as a firewall for
+web-based applications. WAFs are commonly used to protect against
+application attacks such as injections, cross-site scripting, and invalid input
+types.
+
+
+B. VPN 
+A VPN (Virtual Private Network) concentrator is the central connectivity
+point for all remote VPN users. A VPN concentrator would not be used as
+protection against application attacks.
+
+UTM
+
+A UTM (Unified Threat Management) appliance acts as a traditional
+firewall, and many UTMs may also include additional features such
+as intrusion prevention and content filtering. However, UTMs are not
+commonly used for protection of web-based applications.
+
+ SASE
+SASE (Secure Access Service Edge) is a cloud-aware version of a VPN
+client, and it is commonly deployed as a client on the user device. A SASE
+solution would not commonly be used to protect a web-based application.
+
+The incorrect answers:
+A. HIPS
+The use of HIPS (Host-based Intrusion Prevention System) would
+help identify any security vulnerabilities, but there’s nothing relating
+to this issue that would indicate it was caused by an operating system
+or application vulnerability. A HIPS would not commonly alert on the
+modification of a specific file.
+
+LDAP
+802.1X is a standard for authentication, and LDAP (Lightweight
+Directory Access Protocol) is a common protocol used for centralized
+authentication. Other protocols such as RADIUS, TACACS+, or Kerberos
+would also be options for 802.1X authentication.
+
+
+B. SIEM
+A SIEM (Security Information and Event Management) system is
+designed to consolidate log files from multiple devices, quickly search
+through data, and create long-term reports. A SIEM does not provide any
+additional functionality for the authentication process.
+
+ SNMP traps
+SNMP (Simple Network Management Protocol) traps are used to provide
+alerts and alarms from servers and infrastructure devices. SNMP is not an
+authentication protocol.
+
+ SPF
+SPF (Sender Policy Framework) is an email security standard used to
+validate authorized mail senders. The SPF information is added to a DNS
+(Domain Name System) server and accessed by email recipients.
+
+
+ICS
+ICS (Industrial Control Systems) devices are large industrial systems and
+usually involve manufacturing equipment or power generation equipment.
+A time clock would not be categorized as an ICS.
+
+
+UTM 
+A unified threat management appliance is commonly located in the core of
+the network. The use of a cellular hotspot would circumvent the UTM and
+this traffic would not be logged.
+
+
+DDoS
+A DDOS (Distributed Denial of Service) would cause outages or slow
+performance to a service.
+
+ACL
+An ACL (Access Control List) is a security control commonly
+implemented on routers to allow or restrict traffic flows through the
+network.
+
+IPS
+An IPS (Intrusion Prevention System) is designed to identify and block
+known vulnerabilities traversing the network.
+
+ARO
+The ARO (Annualized Rate of Occurrence) describes the number of
+instances estimated to occur in a year.
+
+MTTR
+MTTR (Mean Time to Repair) is the time required to repair a product or
+system after a failure
+
+SLE
+SLE (Single Loss Expectancy) is the monetary loss if a single event
+occurs.
+
+ALE
+The ALE (Annual Loss Expectancy) is the expected cost for all events in a
+single year
+
+ARO
+The ARO (Annualized Rate of Occurrence) describes the number of
+instances estimated to occur in a year.
+
+DMARC
+DMARC (Domain-based Message Authentication Reporting and
+Conformance) specifies the disposition of spam emails. The legitimate
+owner of the originating email domain can choose to have these messages
+accepted, sent to a spam folder, or rejected.
+
+
+ SPF
+SPF (Sender Policy Framework) is a list of all authorized mail servers for
+a specific domain. All legitimate emails would be sent from one of the
+servers listed in the SPF configuration.
+
+ NAC
+NAC (Network Access Control) is a way to limit network access to only
+authorized users. 
+
+ DKIM
+DKIM (Domain Keys Identified Mail) provides a way to validate all
+digitally signed messages from a specific email server. DKIM does not
+determine how the receiving server categorizes these digitally signed
+messages.
+
+802.1X
+802.1X is a useful authentication protocol, but it needs additional
+functionality to authenticate across multiple user databases.
+
+ EAP
+EAP (Extensible Authentication Protocol) is an authentication
+framework commonly associated with network access control. EAP by
+itself does not provide the federation needed to authenticate users to a
+third-party access database.
+
+D. SSO
+SSO (Single Sign-On) describes the process of enabling a single
+authentication to grant access to many different network services.
+Obtaining login credentials from a third-party access database does not
+describe the process used by SSO.
+
+Federation
+Federation would allow members of one organization to authenticate
+using the credentials of another organization.
+
+MTBF
+The MTBF (Mean Time Between Failures) is a prediction of how often a
+repairable system will fail.
+
+
+ RTO
+RTO (Recovery Time Objectives) define a timeframe needed to restore a
+particular service level.
+
+ MTTR
+MTTR (Mean Time to Restore) is the amount of time it takes to repair a
+component.
+
+ RPO
+RPO (Recovery Point Objective) describes the minimum data or
+operational state required to categorize a system as recovered.
+
+MOA
+An MOA (Memorandum of Agreement) is a formal document where
+both sides agree to a broad set of goals and objectives associated with the
+partnership.
+
+
+SLA
+An SLA (Service Level Agreement) is commonly provided as a formal
+contract between two parties that documents the minimum terms for
+services provided. The SLA often provides very specific requirements and
+expectations between both parties.
+
+ SOW
+An SOW (Statement of Work) is a detailed list of items to be completed
+as part of overall project deliverables. For example, a list of expected job
+tasks associated with a firewall installation would be documented in an
+SOW.
+
+ NDA
+An NDA (Non-Disclosure Agreement) is a confidentiality agreement
+between parties. 
+
+COPE
+A device that is COPE (Corporately Owned and Personally Enabled) is
+commonly purchased by the corporation and allows the use of the mobile
+device for both business and personal use.
+
+802.1X
+802.1X uses a centralized authentication server, and this allows all users to
+use their corporate credentials during the login process.
+
+
+
+A. WPA3
+WPA3 (Wi-Fi Protected Access 3) is an encryption protocol for 802.11
+wireless networking.
+
+C. PSK
+PSK (Pre-Shared Key) is a wireless configuration option that allows
+everyone on the network to use the same access key or password when
+connecting to the wireless network. 
+
+D. MFA
+MFA (Multifactor Authentication) describes the use of multiple types
+of authentication checks. A username and password is a single factor
+(something you know), and the use of MFA does not itself require unique
+username and password credentials for each user.
+
+IoT support
+IoT (Internet of Things) support is available in many cloud infrastructure
+models,
+
+COPE
+A COPE (Corporate-owned, Personally Enabled) device would solve the
+issue of device standardization and would allow the device to be used for
+both corporate access and personal use.
+
+
+A. CYOD
+CYOD (Choose Your Own Device) allows the user to pick the make and
+model of their device. 
+
+B. SSO
+SSO (Single Sign-On) is used to authenticate once when accessing
+multiple resources.
+
+BYOD
+With BYOD (Bring Your Own Device), the employee uses their personal
+device at work. 
+
+ISO files containing public information are usually distributed without
+any encryption, and a hash value would not commonly be used as a
+decryption key
+
+SMS
+SMS (Short Message Service), or text messages, are commonly used as
+authentication factors. However, the use of a mobile device to receive the
+SMS message does not guarantee that the owner of the mobile device is
+physically present.
+
+CA
+A CA (Certificate Authority) key is commonly used to validate the digital
+signature from a trusted CA
+
+SASE
+A SASE (Secure Access Service Edge) solution is a next-generation VPN
+technology designed to optimize the process of secure communication to
+cloud services.
+
+
+RTOS
+An RTOS (Real-time Operating System) is an OS designed for industrial
+equipment, automobiles, and other time-sensitive applications.
+
+B. CRL
+A CRL (Certificate Revocation List) is used to determine if a certificate
+has been administratively revoked. 
+
+
+IaC configuration file
+An IaC (Infrastructure as Code) configuration file describes an
+infrastructure configuration commonly used by cloud-based systems
+
+AUP - An acceptable use policy (AUP) is defined by an employer to describe the
+proper use of technology and systems within an organization.
+
+DKIM
+Digitally sign all outgoing email messages
+DKIM (Domain Keys Identified Mail) is used to publish the public key
+used for the digital signature for all outgoing email.
+
+DMARC (Domain-based Message Authentication, Reporting, and
+Conformance) record announces the preferred email disposition if a
+message is identified as spam. DMARC options include accepting the
+messages, sending them to a spam folder, or simply rejecting the emails
+
+RTOS
+RTOS (Real-Time Operating Systems) are designed for time-sensitive
+applications and services. Manufacturing equipment and transportation
+systems often incorporate an RTOS.
+
+MTTR
+MTTR (Mean Time To Restore) is the amount of time required to get
+back up and running. This is sometimes called Mean Time To Repair.
+
+
+A. MTBF
+MTBF (Mean Time Between Failures) is a prediction of how long the
+system will be operational before a failure occurs.
+
+C. RPO
+An RPO (Recovery Point Objective) is a qualifier that determines when
+the system is recovered. A recovered system may not be completely
+repaired, but it will be running well enough to maintain a certain level of
+operation.
+
+D. RTO
+An RTO (Recovery Time Objective) is the service level goal to work
+towards when recovering a system and getting back up and running.
+
+
+Highly available
+High availability (HA) is usually associated with redundancy or faulttolerance.
+Data moving through the network would not be considered
+highly available.
+
+
+Service level agreement
+A service level agreement (SLA) is used to contractually define the
+minimum terms for services. In this example, the medical imaging
+company would require an SLA from the network provider for the
+necessary throughput and uptime metrics.
+
+
+B. Memorandum of understanding
+A memorandum of understanding (MOU) is an informal letter of
+intent. The MOU is not a signed contract, and there are no contractual
+obligations associated with the content of an MOU.
+
+C. Non-disclosure agreement
+A non-disclosure agreement (NDA) is used between entities to prevent
+the use and dissemination of confidential information.
+
+D. Acceptable use policy
+An acceptable use policy (AUP) commonly details the rules of behavior
+for employees using an organization’s network and computing resources.
+
+OCSP stapling
+OCSP (Online Certificate Status Protocol) stapling allows the certificate
+holder verify their own certificate status. The OCSP status is commonly
+“stapled” into the SSL/TLS handshake process. Instead of contacting the
+certificate authority to verify the certificate, the verification is included
+with the initial network connection to the server.
+
+CRL
+A CRL (Certificate Revocation List) is a list of revoked certificates
+maintained by the certificate authority. To view the CRL, an end-user
+client would directly access the CA.
+
+LDAP
+LDAP (Lightweight Directory Access Protocol) is a common standard
+for authentication. LDAP is an open standard and is available across many
+different operating systems and devices.
+
+
+WAF
+A WAF (Web Application Firewall) is used to protect a web-based
+application from exploits and other attacks. A WAF is not used to validate
+login credentials.
+
+
+RFID cloning
+RFID (Radio Frequency Identification) cloning is used to duplicate an
+existing RFID device. These devices are not commonly associated with
+network communication to a public web server.
+
+BPA
+A BPA (Business Partners Agreement) is used between entities going into
+business together. A list of itemized service requests would not be part of a
+BPA.
+
+SLA
+An SLA (Service Level Agreement) sets the minimum terms of service
+between a customer and a service provider. This agreement often contains
+terms for expected uptime, response time requirements, and other
+minimum service levels required by the customer
+
+
+VPN
+A VPN (Virtual Private Network) would encrypt all data transferred over
+the network.
+
+
+SSID name
+The SSID (Service Set Identifier) is the name associated with the wireless
+network. The name of the access point is not a security feature, so changing
+the name would not provide any additional access control.
+
+PKI
+PKI (Public Key Infrastructure) is a method of describing the public-key
+encryption technologies and its supporting policies and procedures. PKI
+does not require the use of supplicants, authenticators, or authentication
+
+SQL requests
+A SQL (Structured Query Language) request is commonly associated
+with a database-related process. SQL requests are software-related and are
+not related to a hardware vulnerability
+
+XSS attachments
+XSS (Cross-site Scripting) is an exploit which uses the trust in a browser
+to gain access to a web site. An XSS attachment describes a malicious
+script included in an email or similar delivery mechanism. Cross-site
+scripting is a software exploit and is not associated with a hardware
+vulnerability.
+
+MFA
+MFA (Multi-factor authentication) is used to provide additional proof
+of a user's identity during the authentication process. MFA is not used to
+minimize the number of authentication requests required by a system.
+
+D. SCAP
+SCAP (Security Content Automation Protocol) is a standard method used
+by security tools to identify and act on the same criteria. SCAP is not used
+to minimize the number of required authentications.
+
+VLANs
+A VLAN (Virtual Local Area Network) is a logical method of segmenting
+traffic within network switches. Although this segmentation is effective,
+it’s not as secure as an air gap.
+
+SOAR- stands for Security Orchestration, Automation, and Response. It is a technology stack that helps security teams collect threat data, organize security tools, and automate responses to cyber threats.
+
+EDR- focuses only on individual devices like laptops, phones, and servers. It watches for strange behavior on each machine
+
+XDR takes things a step further. It is the "extended" version of EDR. It connects data from your endpoints, cloud services, email, and network.
+
+
+ TIP- Threat Intelligence Platform (TIP) is a specialized software tool that gathers, cleans, and organizes data about cyber threats from hundreds of external and internal sources. Instead of leaving security teams to sort through a messy flood of alerts, a TIP turns raw data—like malicious IP addresses, phishing emails, or hacker group profiles—into clear, actionable insights
+
+SOC- A Security Operations Center (SOC) handles Incident Response (IR) as a structured way to find, stop, and clean up after cyber threats. When an alarm goes off, the SOC steps in to keep damage and downtime as low as possible
+
+UEFI- is considered better than legacy BIOS because it offers faster boot times, supports massive storage drives, and includes advanced security features like Secure Boot
+Stronger Security: UEFI features Secure Boot, which checks the digital signature of software during startup to block malicious bootkits and rootkits before the operating system loads. BIOS lacks this protection
+
+
+GPO- Active Directory (AD) Group Policy is a centralized management framework that lets IT administrators configure and control operating systems, applications, and user settings across a network. Instead of updating individual computers one by one, administrators define rules once and apply them globally or to specific groups
+
+EDR-Traditional antivirus only blocks known threats. EDR catches advanced, hidden, or brand-new attacks that slip past basic defenses
+
+MDT- In a security or tech context, MDT most commonly stands for Mobile Threat Defense or, depending on the IT context, Microsoft Deployment Toolkit. However, because you asked about "security," it typically refers to mobile device protection.
+
+
+IAM- Identity and Access Management (IAM) is a core cybersecurity framework that ensures the right users and devices get proper access to technology resources. It acts as a digital gatekeeper for an organization's data, apps, and networks.
+
+ [1] Core Functions of IAM Authentication: Verifies that a user or device is who they claim to be (often using passwords or Multi-Factor Authentication (MFA)).
+Authorization: Determines what files, apps, or data an authenticated user is allowed to view or change.Administration: Manages the user lifecycle, including onboarding new workers, changing roles, and removing access when someone leaves.Monitoring and Auditing: Tracks user activity to spot unusual behavior and meets compliance rules
+
+
+TOTP- A Time-based One-Time Password (TOTP) is a temporary, secure numeric code used to verify your identity during a login. It serves as a second layer of defense in multi-factor authentication (MFA) beyond just your standard password
+
+SAML stands for Security Assertion Markup Language, an open standard protocol used in cybersecurity to safely exchange user authentication and authorization data between different domains.
+SAML makes Single Sign-On (SSO) possible. It lets a user log in once with a single set of credentials and access multiple independent applications or websites without logging in again
+
+
+OIDC-SAML makes Single Sign-On (SSO) possible. It lets a user log in once with a single set of credentials and access multiple independent applications or websites without logging in again
+
+PAM stands for Privileged Access Management, a cybersecurity strategy and technology framework used to secure, control, and monitor accounts that have elevated permissions or special administrative access. You can learn more about how these frameworks operate through Microsoft.
+Core Functions of PAMPAM tools protect an organization by adding strict controls around these powerful accounts:Credential vaulting: Stores passwords and keys in a secure, encrypted digital safe instead of letting people share or write them down.Least privilege enforcement: Limits user access to only the tools and time needed to finish a specific task.Session monitoring: Records and watches administrative activity in real-time to spot unusual behavior. [1] (https://www.paloaltonetworks.com/cyberpedia/what-is-privileged-access-management)
+
+Order of volatility - is a core principle in digital forensics and incident response. It refers to the sequence in which you should collect digital evidence—starting with the most fragile, short-lived data and moving down to permanent storage.  Volatile data is information that changes quickly or disappears completely when a device loses power or restarts. If you turn off a compromised computer before gathering this temporary data, crucial evidence vanishes forever
+
+SHA-256- is a cryptographic function that turns any input data into a unique, fixed-size 64-character string. [1] [2] Key Characteristics of SHA-256Fixed Length: No matter how large or small the input is (a single word or a massive file), the output is always 256 bits (64 hexadecimal characters).Deterministic: The exact same input always produces the exact same output hash.The Avalanche Effect: Changing even a single character in the input completely alters the resulting hash.One-Way (Irreversible): You cannot reverse the hash output to find the original input data
+
+MD5 stands for Message-Digest Algorithm 5. It is a widely used mathematical function that turns any data—like a text file, a password, or a whole software program—into a short, fixed-length code called a hash. This hash is always 128 bits long (usually shown as a 32-character string of letters and numbers). , How It WorksOne-way street: MD5 takes an input and scrambles it into a unique digital fingerprint. You cannot reverse the process to get the original data back from the hash.Consistency: The exact same input will always produce the exact same MD5 hash.Sensitivity: If you change even a single comma or letter in the original file, the resulting MD5 hash changes completely
+
+CTI- Cyber Threat Intelligence (CTI) is the collection, analysis, and application of information about current and potential cyber attacks to help organizations make smart security decisions] Instead of just looking at raw alerts, CTI turns raw data into clear, useful knowledge about who is attacking, why they are attacking, and how they operate. [1] 
+
+IOC - In cyber security, an IOC (Indicator of Compromise) is a piece of digital evidence that a system or network has been breached. Think of it like muddy footprints left by a burglar. The footprints do not just prove someone was there; they provide clues about what happened and what tools were used.Common Types of IOCsSecurity teams look for several types of data clues: Network data: Unusual IP addresses, strange website domain names, or odd traffic patterns.Host data: Unrecognized file names, modified registry keys, or strange computer processes.Behavioral data: Sign-ins from abnormal locations or large bursts of file requests
+
+

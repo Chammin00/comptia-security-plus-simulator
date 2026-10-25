@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CompTIA Security+ (SY0-701) Exam Simulator & Mastery Hub</title>
+  <meta name="description" content="Realistic Pearson VUE style CompTIA Security+ SY0-701 Exam Simulator with PBQ simulations, flashcards, port drills, audio reader, and readiness analytics.">
+  <link rel="stylesheet" href="styles/app.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="cosmic-background.js"></script>
+</head>
+<body>
+  <div id="app-shell">
+    <!-- Main Top Navigation -->
+    <header class="navbar">
+      <div class="nav-container">
+        <a href="#" class="nav-brand" data-view="dashboard">
+          <span class="brand-icon">🛡️</span>
+          <div>
+            <div class="brand-title">Security+ Simulator</div>
+          </div>
+          <span class="brand-version">SY0-701</span>
+        </a>
+
+        <ul class="nav-links-list">
+          <li><a href="#" class="nav-link active" data-view="dashboard"><span>🏠</span> Dashboard</a></li>
+          <li><a href="#" class="nav-link" data-view="audio-reader"><span>🔊</span> Read Aloud</a></li>
+          <li><a href="#" class="nav-link" data-view="exam"><span>⏱️</span> Timed Exam</a></li>
+          <li><a href="#" class="nav-link" data-view="practice"><span>📚</span> Study Mode</a></li>
+          <li><a href="#" class="nav-link" data-view="pbq"><span>🛠️</span> PBQ Labs</a></li>
+          <li><a href="#" class="nav-link" data-view="drills"><span>⚡</span> Speed Drills</a></li>
+          <li><a href="#" class="nav-link" data-view="matching"><span>🧩</span> Definition Match</a></li>
+          <li><a href="#" class="nav-link" data-view="flashcards"><span>📇</span> Flashcards</a></li>
+          <li><a href="#" class="nav-link" data-view="analytics"><span>📊</span> Analytics</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <button id="btn-theme-toggle" class="action-pill-btn">
+            🌙 Dark SOC
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- VIEW 1: DASHBOARD -->
+    <main id="view-dashboard" class="view-panel active-panel">
+      <!-- Hero Banner -->
+      <section class="dashboard-hero">
+        <div class="dash-welcome">
+          <h1>CompTIA Security+ SY0-701</h1>
+          <p>Full-spectrum cybersecurity certification simulator with audio reader, realistic Pearson VUE exam engine, interactive Performance-Based Questions (PBQs), and automated readiness diagnostics.</p>
+        </div>
+
+        <div class="hero-readiness-widget">
+          <div class="readiness-label">Exam Readiness</div>
+          <div class="readiness-value-row">
+            <span id="dash-readiness-num" class="readiness-score-big">0%</span>
+            <span id="dash-readiness-tag" class="readiness-tag badge-neutral">Not Started</span>
+          </div>
+          <div id="dash-readiness-advice" class="readiness-sub-advice">Take a timed exam to evaluate your score</div>
+        </div>
+      </section>
+
+      <!-- Launch Modes Grid -->
+      <section class="dashboard-actions-grid">
+        <div class="launch-card" style="border-color: rgba(56, 189, 248, 0.4); background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9));">
+          <div class="card-icon-big">🔊</div>
+          <h3>Audio Cheat Sheet (Read Aloud)</h3>
+          <p>Listen to 160+ official CompTIA Security+ acronyms, terms, and definitions aloud using voice synthesis with interactive Next/Previous navigation and continuous auto-play.</p>
+          <button class="exam-nav-btn primary" onclick="window.app.showView('audio-reader')">Open Audio Reader →</button>
+        </div>
+
+        <div class="launch-card">
+          <div class="card-icon-big">⏱️</div>
+          <h3>Full Timed Simulation</h3>
+          <p>CompTIA standard format: 90 scenario questions, 90-minute timer, scaled scoring (100–900, passing: 750), strike-through, flag for review, and Pearson VUE interface.</p>
+          <button id="btn-start-full-exam" class="exam-nav-btn primary" onclick="window.app.startFullExam()">Launch Full Exam (90m)</button>
+        </div>
+
+        <div class="launch-card" style="border-color: rgba(52, 211, 153, 0.4); background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(6, 78, 59, 0.2));">
+          <div class="card-icon-big">🛠️</div>
+          <h3>Hands-on Security Labs & PBQs</h3>
+          <p>14 interactive practical labs: Linux Hardening, Nmap Scanner, Firewall ACL, SOC SIEM Triage, WLC 802.1X, OWASP SQLi, PKI, Forensics, IR Playbook, Network Architecture, Crypto Matrix, Controls Matrix, IAM Auditor, & MDM Policies.</p>
+          <div style="display: flex; gap: 0.5rem; margin-top: auto;">
+            <button class="exam-nav-btn primary" onclick="window.app.startPbqLab(0)" style="flex: 1;">Launch Labs (14) →</button>
+            <button class="exam-nav-btn secondary" onclick="window.app.startPbqStudy()" style="flex: 1;">PBQ Study (82)</button>
+          </div>
+        </div>
+
+        <div class="launch-card" style="border-color: rgba(168, 85, 247, 0.4); background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(88, 28, 135, 0.2));">
+          <div class="card-icon-big">🧩</div>
+          <h3>Definition & Word Matcher</h3>
+          <p>Interactive matching drill powered by the updated CompTIA acronyms doc: Match words & acronyms to definitions with Column Match, Cyber Grid, and 60-second Speed Rush!</p>
+          <button class="exam-nav-btn primary" onclick="window.app.showView('matching')">Launch Matcher (70+ Terms) →</button>
+        </div>
+
+        <div class="launch-card">
+          <div class="card-icon-big">📚</div>
+          <h3>Domain Study Mode</h3>
+          <p>Instant answer verification with comprehensive rationales and distractor breakdown. Filter by official SY0-701 exam domain, PBQs, or review bookmarked questions.</p>
+          <button class="exam-nav-btn secondary" onclick="window.app.showView('practice', 'all')">Enter Study Mode</button>
+        </div>
+      </section>
+
+      <!-- Quick Vault / Targeted Practice -->
+      <section class="dashboard-actions-grid" style="margin-bottom: 2rem;">
+        <div class="launch-card" style="border-color: rgba(245, 158, 11, 0.4);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <h3>🎯 Weak Area Vault</h3>
+            <span id="dash-missed-count" class="readiness-tag badge-warn" style="font-size: 0.9rem;">0</span>
+          </div>
+          <p>Questions answered incorrectly in previous attempts are automatically stored here for targeted remediation.</p>
+          <button id="btn-dash-missed" class="exam-nav-btn secondary" onclick="window.app.startMissedPractice()">Drill Missed Questions</button>
+        </div>
+
+        <div class="launch-card" style="border-color: rgba(56, 189, 248, 0.4);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <h3>⭐ Bookmarked Questions</h3>
+            <span id="dash-bookmark-count" class="readiness-tag badge-info" style="font-size: 0.9rem;">0</span>
+          </div>
+          <p>Review and practice items you manually flagged or bookmarked during your study sessions.</p>
+          <button id="btn-dash-bookmarks" class="exam-nav-btn secondary" onclick="window.app.showView('practice', 'bookmarked')">Review Bookmarks</button>
+        </div>
+
+        <div class="launch-card" style="border-color: rgba(168, 85, 247, 0.4);">
+          <h3>⚙️ Custom Exam Builder</h3>
+          <p>Create a customized exam with your choice of question count (10, 25, 50, 90), time limit, and specific domains or PBQs.</p>
+          <button id="btn-custom-exam" class="exam-nav-btn neutral" onclick="window.app.openCustomExamModal()">Build Custom Exam</button>
+        </div>
+      </section>
+
+      <!-- Mock Exam Series (Exams 1 to 5 + Dedicated PBQ Exam) -->
+      <section style="margin-bottom: 2rem;">
+        <h2 class="dash-section-title">📝 Official-Style Mock Exam Series & PBQ Practice (450 Questions + 14 Labs)</h2>
+        <div class="dashboard-actions-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+          <div class="launch-card" style="border-top: 4px solid #38bdf8; border-color: rgba(56, 189, 248, 0.4); background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(14, 116, 144, 0.2));">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <h3>🛠️ PBQ Practice Exam</h3>
+              <span class="readiness-tag badge-info" style="font-size: 0.75rem;">82 PBQs</span>
+            </div>
+            <p>Dedicated simulation of all Matching, Ordering sequence, and Multi-select PBQs.</p>
+            <div style="display: flex; gap: 0.5rem; margin-top: auto;">
+              <button class="exam-nav-btn primary btn-launch-exam-set" data-set="PBQ Practice Exam" onclick="window.app.startPbqExam()" style="flex: 1; font-size: 0.85rem; padding: 0.5rem 0.75rem;">⏱️ Timed</button>
+              <button class="exam-nav-btn secondary btn-launch-study-set" data-filter="pbq-all" onclick="window.app.startPbqStudy()" style="flex: 1; font-size: 0.85rem; padding: 0.5rem 0.75rem;">📚 Study</button>
+            </div>
+          </div>
+
+          <div class="launch-card" style="border-top: 4px solid var(--accent-blue);">
+            <h3>Mock Exam 1</h3>
+            <p>90 Questions • 90 Mins • Scaled 100-900. Authentic format with PBQs upfront.</p>
+            <div style="display: flex; gap: 0.5rem; margin-top: auto;">
+              <button class="exam-nav-btn primary btn-launch-exam-set" data-set="Practice Exam 1" onclick="window.app.launchExamSet('Practice Exam 1')" style="flex: 1; font-size: 0.85rem; padding: 0.5rem 0.75rem;">⏱️ Timed</button>
+              <button class="exam-nav-btn secondary btn-launch-study-set" data-filter="exam-1" onclick="window.app.launchStudySet('exam-1')" style="flex: 1; font-size: 0.85rem; padding: 0.5rem 0.75rem;">📚 Study</button>
+            </div>
+          </div>
+
+          <div class="launch-card" style="border-top: 4px solid var(--accent-green);">
+            <h3>Mock Exam 2</h3>
+            <p>90 Questions • 90 Mins • In-depth architecture & operations scenarios.</p>
+            <div style="display: flex; gap: 0.5rem; margin-top: auto;">
+              <button class="exam-nav-btn primary btn-launch-exam-set" data-set="Practice Exam 2" onclick="window.app.launchExamSet('Practice Exam 2')" style="flex: 1; font-size: 0.85rem; padding: 0.5rem 0.75rem;">⏱️ Timed</button>
+              <button class="exam-nav-btn secondary btn-launch-study-set" data-filter="exam-2" onclick="window.app.launchStudySet('exam-2')" style="flex: 1; font-size: 0.85rem; padding: 0.5rem 0.75rem;">📚 Study</button>
+            </div>
+          </div>
+
+          <div class="launch-card" style="border-top: 4px solid var(--accent-amber);">
+            <h3>Mock Exam 3</h3>
+            <p>90 Questions • 90 Mins • Advanced threats, cloud & forensics questions.</p>
+            <div style="display: flex; gap: 0.5rem; margin-top: auto;">
+              <button class="exam-nav-btn primary btn-launch-exam-set" data-set="Practice Exam 3" onclick="window.app.launchExamSet('Practice Exam 3')" style="flex: 1; font-size: 0.85rem; padding: 0.5rem 0.75rem;">⏱️ Timed</button>
+              <button class="exam-nav-btn secondary btn-launch-study-set" data-filter="exam-3" onclick="window.app.launchStudySet('exam-3')" style="flex: 1; font-size: 0.85rem; padding: 0.5rem 0.75rem;">📚 Study</button>
+            </div>
+          </div>
+
+          <div class="launch-card" style="border-top: 4px solid var(--accent-purple);">
+            <h3>Mock Exam 4</h3>
+            <p>90 Questions • 90 Mins • Threat management & governance deep-dive.</p>
+            <div style="display: flex; gap: 0.5rem; margin-top: auto;">
+              <button class="exam-nav-btn primary btn-launch-exam-set" data-set="Practice Exam 4" onclick="window.app.launchExamSet('Practice Exam 4')" style="flex: 1; font-size: 0.85rem; padding: 0.5rem 0.75rem;">⏱️ Timed</button>
+              <button class="exam-nav-btn secondary btn-launch-study-set" data-filter="exam-4" onclick="window.app.launchStudySet('exam-4')" style="flex: 1; font-size: 0.85rem; padding: 0.5rem 0.75rem;">📚 Study</button>
+            </div>
+          </div>
+
+          <div class="launch-card" style="border-top: 4px solid var(--accent-red);">
+            <h3>Practice Exam 05</h3>
+            <p>90 Questions • 90 Mins • Comprehensive final test readiness exam.</p>
+            <div style="display: flex; gap: 0.5rem; margin-top: auto;">
+              <button class="exam-nav-btn primary btn-launch-exam-set" data-set="Practice Exam 5" onclick="window.app.launchExamSet('Practice Exam 5')" style="flex: 1; font-size: 0.85rem; padding: 0.5rem 0.75rem;">⏱️ Timed</button>
+              <button class="exam-nav-btn secondary btn-launch-study-set" data-filter="exam-5" onclick="window.app.launchStudySet('exam-5')" style="flex: 1; font-size: 0.85rem; padding: 0.5rem 0.75rem;">📚 Study</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Domain Mastery Section -->
+      <section>
+        <h2 class="dash-section-title">CompTIA Security+ SY0-701 Domain Breakdown</h2>
+        <div id="dash-domain-bars" class="domain-bars-grid">
+          <!-- Rendered dynamically by app.js -->
+        </div>
+      </section>
+    </main>
+
+    <!-- VIEW 2: AUDIO READER (READ ALOUD) -->
+    <main id="view-audio-reader" class="view-panel">
+      <div id="audio-reader-screen-container">
+        <!-- Rendered dynamically by audioReaderEngine.js -->
+      </div>
+    </main>
+
+    <!-- VIEW 3: TIMED EXAM -->
+    <main id="view-exam" class="view-panel">
+      <div id="exam-screen-container">
+        <!-- Rendered dynamically by examEngine.js -->
+      </div>
+    </main>
+
+    <!-- VIEW 4: PRACTICE / STUDY MODE -->
+    <main id="view-practice" class="view-panel">
+      <div id="practice-screen-container">
+        <!-- Rendered dynamically by practiceEngine.js -->
+      </div>
+    </main>
+
+    <!-- VIEW 5: PBQ LABS -->
+    <main id="view-pbq" class="view-panel">
+      <div id="pbq-screen-container">
+        <!-- Rendered dynamically by pbqEngine.js -->
+      </div>
+    </main>
+
+    <!-- VIEW 6: SPEED DRILLS -->
+    <main id="view-drills" class="view-panel">
+      <div id="drills-screen-container">
+        <!-- Rendered dynamically by flashcardEngine.js -->
+      </div>
+    </main>
+
+    <!-- VIEW 7: FLASHCARDS -->
+    <main id="view-flashcards" class="view-panel">
+      <div id="flashcard-screen-container">
+        <!-- Rendered dynamically by flashcardEngine.js -->
+      </div>
+    </main>
+
+    <!-- VIEW 8: DEFINITION & WORD MATCHER -->
+    <main id="view-matching" class="view-panel">
+      <div id="matching-screen-container">
+        <!-- Rendered dynamically by matchingEngine.js -->
+      </div>
+    </main>
+
+    <!-- VIEW 9: ANALYTICS -->
+    <main id="view-analytics" class="view-panel">
+      <div id="analytics-screen-container">
+        <!-- Rendered dynamically by analytics.js -->
+      </div>
+    </main>
+
+    <!-- MODAL: Custom Exam Builder -->
+    <div id="modal-custom-exam" class="modal-overlay">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>Custom Exam Configuration</h3>
+          <button class="modal-close-btn">&times;</button>
+        </div>
+        <form id="custom-exam-form">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="custom-exam-set">Exam Source</label>
+              <select id="custom-exam-set" class="form-input">
+                <option value="all" selected>All Questions (Complete 450 Question Pool)</option>
+                <option value="PBQ Practice Exam">🛠️ PBQ Practice Exam (All 82 Performance-Based Questions)</option>
+                <option value="Practice Exam 1">📝 Mock Exam 1 (90 Questions)</option>
+                <option value="Practice Exam 2">📝 Mock Exam 2 (90 Questions)</option>
+                <option value="Practice Exam 3">📝 Mock Exam 3 (90 Questions)</option>
+                <option value="Practice Exam 4">📝 Mock Exam 4 (90 Questions)</option>
+                <option value="Practice Exam 5">📝 Security+ Practice Exam 05 (90 Questions)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="custom-q-count">Number of Questions</label>
+              <select id="custom-q-count" class="form-input">
+                <option value="10">10 Questions (Quick Check - 15 mins)</option>
+                <option value="25" selected>25 Questions (Standard - 30 mins)</option>
+                <option value="50">50 Questions (Half Exam - 60 mins)</option>
+                <option value="90">90 Questions (Full CompTIA Simulator - 90 mins)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="custom-time-limit">Time Limit (Minutes)</label>
+              <input type="number" id="custom-time-limit" class="form-input" value="30" min="5" max="180">
+            </div>
+
+            <div class="form-group">
+              <label>Select Target Domains</label>
+              <div class="checkbox-group">
+                <label class="cb-label"><input type="checkbox" class="custom-domain-cb" value="1" checked> Domain 1: General Security Concepts (12%)</label>
+                <label class="cb-label"><input type="checkbox" class="custom-domain-cb" value="2" checked> Domain 2: Threats, Vulnerabilities & Mitigations (22%)</label>
+                <label class="cb-label"><input type="checkbox" class="custom-domain-cb" value="3" checked> Domain 3: Security Architecture (18%)</label>
+                <label class="cb-label"><input type="checkbox" class="custom-domain-cb" value="4" checked> Domain 4: Security Operations (28%)</label>
+                <label class="cb-label"><input type="checkbox" class="custom-domain-cb" value="5" checked> Domain 5: Security Program Management & Oversight (20%)</label>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="exam-nav-btn secondary modal-close-btn">Cancel</button>
+            <button type="submit" class="exam-nav-btn primary">Start Custom Exam</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- MODAL: Scratchpad / Notes -->
+    <div id="modal-scratchpad" class="modal-overlay">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 id="scratchpad-modal-title">Scratchpad & Study Notes</h3>
+          <button class="modal-close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+            Type personal notes, mnemonic acronyms, or scratch work for this question. Notes are saved automatically to your local storage.
+          </p>
+          <textarea id="scratchpad-textarea" class="scratchpad-area" placeholder="Write your notes here..."></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="exam-nav-btn primary modal-close-btn">Done / Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Application Scripts -->
+  <script src="js/data/questions.js"></script>
+  <script src="js/data/pbqData.js"></script>
+  <script src="js/data/portsData.js"></script>
+  <script src="js/data/acronymsData.js"></script>
+  <script src="js/data/flashcardsData.js"></script>
+  <script src="js/data/cheatsheetData.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/examEngine.js"></script>
+  <script src="js/practiceEngine.js"></script>
+  <script src="js/pbqEngine.js"></script>
+  <script src="js/flashcardEngine.js"></script>
+  <script src="js/matchingEngine.js"></script>
+  <script src="js/audioReaderEngine.js"></script>
+  <script src="js/analytics.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
