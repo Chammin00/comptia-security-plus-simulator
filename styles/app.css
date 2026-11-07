@@ -1,36 +1,46 @@
 /* CompTIA Security+ Exam Simulator Stylesheet */
 /* Modern Cyber SOC Dark Mode (Default) & Clean Light Theme */
+@import url('high-gloss-lacquer.css');
 
 :root {
-  --bg-primary: transparent;
-  --bg-secondary: rgba(17, 24, 39, 0.75);
-  --bg-card: rgba(30, 41, 59, 0.72);
-  --bg-card-hover: rgba(39, 53, 73, 0.85);
-  --bg-header: rgba(15, 23, 42, 0.75);
-  --border-color: rgba(255, 255, 255, 0.12);
-  --text-primary: #f8fafc;
+  /* High-Gloss Lacquer Colors — Navy Blue (#050B18 to #0E1D3A) & Tan (#C5A059 to #DFBA73) */
+  --c-navy: #0E1D3A;
+  --c-navy-deep: #050B18;
+  --c-navy-light: #16284D;
+  --c-tan: #C5A059;
+  --c-tan-bright: #DFBA73;
+  --c-tan-glow: rgba(197, 160, 89, 0.3);
+
+  --bg-primary: #050B18;
+  --bg-secondary: rgba(14, 29, 58, 0.88);
+  --bg-card: #0E1D3A;
+  --bg-card-hover: #16284D;
+  --bg-header: rgba(14, 29, 58, 0.95);
+  --border-color: rgba(197, 160, 89, 0.28);
+  --border-hover: rgba(223, 186, 115, 0.85);
+  --text-primary: #f0f4f8;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
   
-  --accent-blue: #38bdf8;
+  --accent-blue: #C8A96E;
   --accent-cyan: #06b6d4;
   --accent-green: #10b981;
   --accent-red: #ef4444;
   --accent-amber: #f59e0b;
   --accent-purple: #a855f7;
 
-  --btn-primary-bg: #2563eb;
-  --btn-primary-hover: #1d4ed8;
-  --btn-secondary-bg: #334155;
-  --btn-secondary-hover: #475569;
+  --btn-primary-bg: #C8A96E;
+  --btn-primary-hover: #dfc288;
+  --btn-secondary-bg: rgba(27, 42, 74, 0.8);
+  --btn-secondary-hover: rgba(40, 62, 107, 0.9);
 
   --font-mono: "JetBrains Mono", "Fira Code", Consolas, Menlo, monospace;
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --radius-sm: 6px;
-  --radius-md: 10px;
+  --radius-md: 12px;
   --radius-lg: 16px;
-  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
-  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --shadow-card: 0 8px 32px -4px rgba(2, 6, 18, 0.8), 0 2px 8px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+  --transition-fast: 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 [data-theme="light"] {
@@ -74,32 +84,44 @@ body {
   min-height: 100vh;
 }
 
-/* App Container Layout */
+/* App Container Layout (AWS Enterprise Fullscreen) */
 #app-shell {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
-/* Main Top Navigation */
+/* Left-Side Navigation Panel */
 .navbar {
-  background-color: var(--bg-header);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--border-color);
+  background: linear-gradient(180deg, #0E1D3A 0%, rgba(11, 22, 44, 0.98) 45%, rgba(5, 11, 24, 0.99) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(197, 160, 89, 0.28);
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 8px 0 32px -4px rgba(2, 6, 18, 0.85), inset -1px 0 1px rgba(255, 255, 255, 0.15);
   position: sticky;
   top: 0;
+  width: 280px;
+  min-width: 280px;
+  max-width: 280px;
+  height: 100vh;
   z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1.5rem 1rem;
 }
 
 .nav-container {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0.75rem 1.5rem;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: space-between;
+  height: 100%;
+  gap: 1.5rem;
 }
 
 .nav-brand {
@@ -108,6 +130,8 @@ body {
   gap: 0.75rem;
   text-decoration: none;
   color: var(--text-primary);
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.22);
 }
 
 .brand-icon {
@@ -136,48 +160,83 @@ body {
 
 .nav-links-list {
   display: flex;
+  flex-direction: column;
   list-style: none;
-  gap: 0.5rem;
-  align-items: center;
+  gap: 0.35rem;
+  width: 100%;
 }
 
 .nav-link {
   color: var(--text-secondary);
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 0.9rem;
-  padding: 0.5rem 0.85rem;
-  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.95rem;
+  min-height: 48px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  border-left: 3px solid transparent;
   transition: all var(--transition-fast);
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.75rem;
+  cursor: pointer;
 }
 
 .nav-link:hover {
-  color: var(--text-primary);
-  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  background: rgba(14, 29, 58, 0.85);
+  border-color: rgba(197, 160, 89, 0.25);
+  border-left: 3px solid #DFBA73;
+  transform: translateX(3px);
 }
 
 .nav-link.active {
   color: #ffffff;
-  background-color: var(--btn-primary-bg);
-  box-shadow: 0 0 12px rgba(37, 99, 235, 0.4);
+  background: linear-gradient(90deg, rgba(197, 160, 89, 0.2) 0%, rgba(14, 29, 58, 0.9) 100%);
+  border: 1px solid rgba(197, 160, 89, 0.45);
+  border-left: 3px solid #DFBA73;
+  box-shadow: 0 4px 18px rgba(197, 160, 89, 0.2);
+}
+
+.view-panel {
+  flex: 1;
+  min-width: 0;
+  padding: 2rem 2.5rem;
+  overflow-y: auto;
 }
 
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(197, 160, 89, 0.22);
+  width: 100%;
 }
 
-/* View Container */
+@media (max-width: 980px) {
+  #app-shell {
+    flex-direction: column;
+  }
+  .navbar {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    height: auto;
+    position: static;
+    border-right: none;
+    border-bottom: 1px solid rgba(197, 160, 89, 0.28);
+  }
+}
+
+/* View Container (AWS Enterprise Fullscreen) */
 .view-panel {
   display: none;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 1.5rem;
+  flex: 1;
+  min-width: 0;
+  max-width: 100%;
   width: 100%;
+  padding: 1rem 0;
 }
 
 .view-panel.active-panel {
@@ -326,8 +385,9 @@ body {
 
 .launch-card:hover {
   transform: translateY(-3px);
-  border-color: var(--accent-blue);
+  border-color: rgba(200, 169, 110, 0.75);
   background-color: var(--bg-card-hover);
+  box-shadow: 0 12px 36px rgba(27, 42, 74, 0.5), 0 0 20px rgba(200, 169, 110, 0.2);
 }
 
 .card-icon-big {
@@ -2082,49 +2142,75 @@ body {
   gap: 0.75rem;
 }
 
-/* 3D Flashcard */
+/* 3D Flashcard Stage & Card Flip Engine */
 .flashcard-stage {
-  perspective: 1000px;
+  perspective: 1200px;
+  -webkit-perspective: 1200px;
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-bottom: 2rem;
+  width: 100%;
 }
 
 .flashcard-box {
   width: 100%;
   max-width: 760px;
   min-height: 380px;
-  position: relative;
-  transform-style: preserve-3d;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 380px;
+  position: relative !important;
+  transform-style: preserve-3d !important;
+  -webkit-transform-style: preserve-3d !important;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
   cursor: pointer;
+  user-select: none;
 }
 
 .flashcard-box.flipped {
-  transform: rotateY(180deg);
+  transform: rotateY(180deg) !important;
+  -webkit-transform: rotateY(180deg) !important;
 }
 
 .card-face {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  border-radius: var(--radius-lg);
-  padding: 2.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-shadow: var(--shadow-card);
-  border: 1px solid var(--border-color);
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
+  transform-style: preserve-3d !important;
+  -webkit-transform-style: preserve-3d !important;
+  border-radius: var(--radius-lg, 12px) !important;
+  padding: 2.25rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45) !important;
+  border: 1px solid var(--gh-border-default, #30363d) !important;
+  overflow: hidden !important;
 }
 
 .card-front {
-  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+  background: var(--gh-card-bg, #161b22) !important;
+  transform: rotateY(0deg) !important;
+  -webkit-transform: rotateY(0deg) !important;
+  z-index: 2 !important;
 }
 
 .card-back {
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-  transform: rotateY(180deg);
+  background: #0d1117 !important;
+  transform: rotateY(180deg) !important;
+  -webkit-transform: rotateY(180deg) !important;
+  z-index: 1 !important;
+}
+
+.flashcard-box.flipped .card-front {
+  z-index: 1 !important;
+}
+
+.flashcard-box.flipped .card-back {
+  z-index: 2 !important;
 }
 
 .card-top-tag {
@@ -4125,12 +4211,99 @@ body {
   gap: 1rem;
 }
 
-/* --- Column Match Layout --- */
+/* --- Column Match Layout & Interactive Line Drawing Canvas --- */
 .match-columns-container {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr auto 1.3fr;
   gap: 1.25rem;
   align-items: stretch;
+}
+
+.match-svg-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 40;
+  overflow: visible;
+}
+
+/* Connector Sockets on Cards */
+.match-socket {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #0d1117;
+  border: 2px solid #f0883e;
+  box-shadow: 0 0 8px rgba(240, 136, 62, 0.5);
+  cursor: crosshair;
+  z-index: 50;
+  transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.match-socket:hover, .match-socket.active {
+  transform: translateY(-50%) scale(1.4);
+  background: #f0883e;
+  box-shadow: 0 0 16px rgba(240, 136, 62, 0.95);
+}
+
+.socket-right {
+  right: -8px;
+}
+
+.socket-left {
+  left: -8px;
+  border-color: #58a6ff;
+  box-shadow: 0 0 8px rgba(88, 166, 255, 0.5);
+}
+
+.socket-left:hover, .socket-left.active {
+  background: #58a6ff;
+  box-shadow: 0 0 16px rgba(88, 166, 255, 0.95);
+}
+
+/* Dynamic Laser Drawing Path */
+.drawing-laser-line {
+  fill: none;
+  stroke: #f0883e;
+  stroke-width: 3.5px;
+  stroke-linecap: round;
+  stroke-dasharray: 6 3;
+  filter: drop-shadow(0 0 6px #f0883e);
+  pointer-events: none;
+  animation: laserPulse 0.8s linear infinite alternate;
+}
+
+@keyframes laserPulse {
+  from { stroke-width: 3px; filter: drop-shadow(0 0 4px #f0883e); }
+  to { stroke-width: 4.5px; filter: drop-shadow(0 0 12px #ff9900); }
+}
+
+/* Permanent Matched Connector Path */
+.locked-match-line {
+  fill: none;
+  stroke-width: 3.5px;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 8px currentColor);
+  pointer-events: none;
+  transition: stroke 0.3s ease;
+}
+
+.match-card.is-drawing-source {
+  border-color: #f0883e !important;
+  box-shadow: 0 0 0 2px rgba(240, 136, 62, 0.4), 0 0 16px rgba(240, 136, 62, 0.3) !important;
+}
+
+.match-card.is-drawing-target-hover {
+  border-color: #58a6ff !important;
+  box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.4), 0 0 16px rgba(88, 166, 255, 0.3) !important;
+  transform: scale(1.02);
 }
 
 @media (max-width: 900px) {

@@ -30,6 +30,23 @@ class MatchingEngine {
     this.speedScore = 0;
     this.speedStreak = 0;
 
+    // Interactive Line Drawing State
+    this.isDrawing = false;
+    this.drawStartData = null; // { pairId, socketX, socketY, cardElem }
+    this.connectedLines = new Map(); // pairId -> { path, color, wordId, defId }
+    this.pairColors = [
+      '#3fb950', // Emerald Green
+      '#58a6ff', // Primer Blue
+      '#bc8cff', // Purple
+      '#f0883e', // AWS Amber
+      '#38bdf8', // Sky Cyan
+      '#f778ba', // Pink
+      '#d29922', // Gold
+      '#34d399'  // Mint
+    ];
+    this.boundResizeListener = () => this.redrawAllConnections();
+    window.addEventListener('resize', this.boundResizeListener);
+
     // Load High Scores from Storage
     this.loadStats();
   }
@@ -121,8 +138,12 @@ class MatchingEngine {
 
   initRound() {
     this.matchedPairIds.clear();
+    this.connectedLines.clear();
+    this.isDrawing = false;
+    this.drawStartData = null;
     this.selectedWordId = null;
     this.selectedDefId = null;
+    this.clearSvgCanvas();
 
     // Pick random items from pool
     const shuffledPool = [...this.filteredPool].sort(() => Math.random() - 0.5);
@@ -207,7 +228,7 @@ class MatchingEngine {
 
         <!-- Instructions Banner -->
         <div class="match-guide-banner">
-          <span>💡 <strong>How to Play:</strong> Click an <em>Acronym / Word</em> card on the left, then click its corresponding <em>Definition</em> on the right to connect them!</span>
+          <span>✏️ <strong>Interactive Line Matching:</strong> Click or drag a line from any <em>Acronym</em> socket on the left directly to its <em>Definition</em> socket on the right (or click to connect)!</span>
           <button class="action-pill-btn" onclick="window.app.matchingEngine.speakCurrentHint()">🔊 Read Instructions</button>
         </div>
 
@@ -237,12 +258,15 @@ class MatchingEngine {
 
   renderColumnMode(words, defs) {
     return `
-      <div class="match-columns-container">
+      <div class="match-columns-container" id="match-columns-container">
+        <!-- SVG Interactive Line Drawing Canvas -->
+        <svg id="match-svg-canvas" class="match-svg-canvas"></svg>
+
         <!-- Left: Word / Acronym Cards -->
         <div class="match-column words-col">
           <div class="col-header">
             <h3>🏷️ Acronyms & Cybersecurity Terms (${words.length})</h3>
-            <span class="col-sub">Select a term</span>
+            <span class="col-sub">Drag line or click to connect</span>
           </div>
           <div class="cards-stack">
             ${words.map(pair => `
@@ -255,6 +279,8 @@ class MatchingEngine {
                   <button class="btn-voice-mini" title="Pronounce word" onclick="event.stopPropagation(); window.app.matchingEngine.speakText('${pair.acronym}. ${pair.term.replace(/'/g, "\\'")}')">🔊</button>
                 </div>
                 <div class="card-term-subtitle">${pair.term}</div>
+                <!-- Interactive Connector Socket (Right Anchor) -->
+                <div class="match-socket socket-right" data-socket="word" data-pair-id="${pair.id}" title="Click or drag line to definition"></div>
               </div>
             `).join("")}
           </div>
@@ -273,13 +299,15 @@ class MatchingEngine {
         <div class="match-column defs-col">
           <div class="col-header">
             <h3>📖 Official Definitions & Concepts (${defs.length})</h3>
-            <span class="col-sub">Select matching definition</span>
+            <span class="col-sub">Drop line or click to match</span>
           </div>
           <div class="cards-stack">
             ${defs.map(pair => `
               <div class="match-card def-card ${this.matchedPairIds.has(pair.id) ? 'is-matched' : ''}" 
                    id="def_${pair.id}" 
                    data-pair-id="${pair.id}">
+                <!-- Interactive Connector Socket (Left Anchor) -->
+                <div class="match-socket socket-left" data-socket="def" data-pair-id="${pair.id}" title="Connect matching line here"></div>
                 <div class="card-def-text">${pair.definition}</div>
                 <div class="card-def-footer">
                   <span class="exam-tip-badge">💡 Exam Key</span>
@@ -498,6 +526,98 @@ class MatchingEngine {
     `;
   }
 
+  // --- Interactive Line Drawing Helper Methods ---
+  clearSvgCanvas() {
+    const svg = document.getElementById("match-svg-canvas");
+    if (svg) svg.innerHTML = "";
+  }
+
+  getSocketCenter(socketElem) {
+    const container = document.getElementById("match-columns-container");
+    if (!container || !socketElem) return { x: 0, y: 0 };
+    const cRect = container.getBoundingClientRect();
+    const sRect = socketElem.getBoundingClientRect();
+    return {
+      x: sRect.left - cRect.left + (sRect.width / 2),
+      y: sRect.top - cRect.top + (sRect.height / 2)
+    };
+  }
+
+  getCardSocketPoint(cardElem, side = "right") {
+    const socket = cardElem ? cardElem.querySelector(`.match-socket.socket-${side}`) : null;
+    if (socket) return this.getSocketCenter(socket);
+    const container = document.getElementById("match-columns-container");
+    if (!container || !cardElem) return { x: 0, y: 0 };
+    const cRect = container.getBoundingClientRect();
+    const rect = cardElem.getBoundingClientRect();
+    return {
+      x: side === "right" ? rect.right - cRect.left : rect.left - cRect.left,
+      y: rect.top - cRect.top + (rect.height / 2)
+    };
+  }
+
+  calculateBezierPath(p1, p2) {
+    const dx = Math.max(Math.abs(p2.x - p1.x) * 0.5, 40);
+    return `M ${p1.x.toFixed(1)} ${p1.y.toFixed(1)} C ${(p1.x + dx).toFixed(1)} ${p1.y.toFixed(1)}, ${(p2.x - dx).toFixed(1)} ${p2.y.toFixed(1)}, ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
+  }
+
+  updateActiveDrawLine(p2) {
+    const svg = document.getElementById("match-svg-canvas");
+    if (!svg || !this.drawStartData) return;
+    let path = document.getElementById("active-drag-laser-line");
+    if (!path) {
+      path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute("id", "active-drag-laser-line");
+      path.setAttribute("class", "drawing-laser-line");
+      svg.appendChild(path);
+    }
+    const d = this.calculateBezierPath(this.drawStartData, p2);
+    path.setAttribute("d", d);
+  }
+
+  removeActiveDrawLine() {
+    const path = document.getElementById("active-drag-laser-line");
+    if (path) path.remove();
+  }
+
+  drawPermanentMatchedLine(pairId) {
+    const svg = document.getElementById("match-svg-canvas");
+    const wordCard = document.getElementById(`word_${pairId}`);
+    const defCard = document.getElementById(`def_${pairId}`);
+    if (!svg || !wordCard || !defCard) return;
+
+    const p1 = this.getCardSocketPoint(wordCard, "right");
+    const p2 = this.getCardSocketPoint(defCard, "left");
+    const color = this.pairColors[this.connectedLines.size % this.pairColors.length];
+
+    let path = document.getElementById(`locked_line_${pairId}`);
+    if (!path) {
+      path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute("id", `locked_line_${pairId}`);
+      path.setAttribute("class", "locked-match-line");
+      path.style.stroke = color;
+      path.style.filter = `drop-shadow(0 0 8px ${color})`;
+      svg.appendChild(path);
+    }
+    const d = this.calculateBezierPath(p1, p2);
+    path.setAttribute("d", d);
+
+    this.connectedLines.set(pairId, { wordId: pairId, defId: pairId, color, path });
+  }
+
+  redrawAllConnections() {
+    if (this.gameMode !== "column") return;
+    this.connectedLines.forEach((info, pairId) => {
+      const wordCard = document.getElementById(`word_${pairId}`);
+      const defCard = document.getElementById(`def_${pairId}`);
+      if (wordCard && defCard && info.path) {
+        const p1 = this.getCardSocketPoint(wordCard, "right");
+        const p2 = this.getCardSocketPoint(defCard, "left");
+        info.path.setAttribute("d", this.calculateBezierPath(p1, p2));
+      }
+    });
+  }
+
   // --- Column & Grid Match Logic ---
   attachEvents() {
     const selectCat = document.getElementById("match-category-select");
@@ -508,17 +628,43 @@ class MatchingEngine {
     }
 
     if (this.gameMode === "column") {
+      const container = document.getElementById("match-columns-container");
       const wordCards = document.querySelectorAll(".word-card:not(.is-matched)");
       const defCards = document.querySelectorAll(".def-card:not(.is-matched)");
 
+      // 1. Line Drawing Pointer / Drag Handlers
       wordCards.forEach(card => {
-        card.addEventListener("click", () => {
+        const pairId = card.getAttribute("data-pair-id");
+        const startDraw = (clientX, clientY) => {
           if (card.classList.contains("is-matched")) return;
-          const pairId = card.getAttribute("data-pair-id");
+          this.isDrawing = true;
+          const p1 = this.getCardSocketPoint(card, "right");
+          this.drawStartData = {
+            pairId: pairId,
+            cardElem: card,
+            x: p1.x,
+            y: p1.y
+          };
+          this.selectedWordId = pairId;
+          document.querySelectorAll(".word-card").forEach(c => c.classList.remove("is-selected", "is-drawing-source"));
+          card.classList.add("is-selected", "is-drawing-source");
 
-          // Deselect previous word card
+          if (container) {
+            const cRect = container.getBoundingClientRect();
+            this.updateActiveDrawLine({ x: clientX - cRect.left, y: clientY - cRect.top });
+          }
+        };
+
+        // Pointerdown / mousedown / touchstart
+        card.addEventListener("pointerdown", (e) => {
+          if (e.target.closest(".btn-voice-mini")) return;
+          startDraw(e.clientX, e.clientY);
+        });
+
+        // Click fallback for word card
+        card.addEventListener("click", (e) => {
+          if (card.classList.contains("is-matched") || e.target.closest(".btn-voice-mini")) return;
           document.querySelectorAll(".word-card").forEach(c => c.classList.remove("is-selected"));
-          
           this.selectedWordId = pairId;
           card.classList.add("is-selected");
 
@@ -528,14 +674,53 @@ class MatchingEngine {
         });
       });
 
+      // Global pointermove / touchmove on container for smooth interactive line drawing
+      if (container && !container._drawEventsAttached) {
+        container._drawEventsAttached = true;
+
+        const onPointerMove = (clientX, clientY) => {
+          if (!this.isDrawing || !this.drawStartData) return;
+          const cRect = container.getBoundingClientRect();
+          const p2 = { x: clientX - cRect.left, y: clientY - cRect.top };
+          this.updateActiveDrawLine(p2);
+
+          // Highlight target def card under cursor
+          const elemUnder = document.elementFromPoint(clientX, clientY);
+          const targetCard = elemUnder ? elemUnder.closest(".def-card:not(.is-matched)") : null;
+          document.querySelectorAll(".def-card").forEach(c => c.classList.remove("is-drawing-target-hover"));
+          if (targetCard) targetCard.classList.add("is-drawing-target-hover");
+        };
+
+        const onPointerUp = (clientX, clientY) => {
+          if (!this.isDrawing || !this.drawStartData) return;
+          this.isDrawing = false;
+          this.removeActiveDrawLine();
+          document.querySelectorAll(".word-card").forEach(c => c.classList.remove("is-drawing-source"));
+          document.querySelectorAll(".def-card").forEach(c => c.classList.remove("is-drawing-target-hover"));
+
+          const elemUnder = document.elementFromPoint(clientX, clientY);
+          const targetCard = elemUnder ? elemUnder.closest(".def-card:not(.is-matched)") : null;
+          if (targetCard) {
+            const defPairId = targetCard.getAttribute("data-pair-id");
+            this.selectedWordId = this.drawStartData.pairId;
+            this.selectedDefId = defPairId;
+            targetCard.classList.add("is-selected");
+            this.evaluateMatch();
+          }
+          this.drawStartData = null;
+        };
+
+        container.addEventListener("pointermove", (e) => onPointerMove(e.clientX, e.clientY));
+        window.addEventListener("pointerup", (e) => onPointerUp(e.clientX, e.clientY));
+      }
+
+      // 2. Click-to-connect fallback on def cards
       defCards.forEach(card => {
-        card.addEventListener("click", () => {
-          if (card.classList.contains("is-matched")) return;
+        card.addEventListener("click", (e) => {
+          if (card.classList.contains("is-matched") || e.target.closest(".btn-voice-mini")) return;
           const pairId = card.getAttribute("data-pair-id");
 
-          // Deselect previous def card
           document.querySelectorAll(".def-card").forEach(c => c.classList.remove("is-selected"));
-
           this.selectedDefId = pairId;
           card.classList.add("is-selected");
 
@@ -572,6 +757,7 @@ class MatchingEngine {
 
   evaluateMatch() {
     const isCorrect = this.selectedWordId === this.selectedDefId;
+    const currentPairId = this.selectedWordId;
     const wordElem = document.getElementById(`word_${this.selectedWordId}`) || document.querySelector(`.match-grid-card[data-pair-id='${this.selectedWordId}'][data-type='word']`);
     const defElem = document.getElementById(`def_${this.selectedDefId}`) || document.querySelector(`.match-grid-card[data-pair-id='${this.selectedDefId}'][data-type='def']`);
     const feedbackDrawer = document.getElementById("match-feedback-drawer");
@@ -580,18 +766,23 @@ class MatchingEngine {
 
     if (isCorrect) {
       // MATCH SUCCESS
-      this.matchedPairIds.add(this.selectedWordId);
+      this.matchedPairIds.add(currentPairId);
       this.score += 150 + (this.streak * 30);
       this.streak++;
       this.totalMatchesCompleted++;
       this.saveStats();
 
+      // Draw permanent connecting line if in column match mode
+      if (this.gameMode === "column") {
+        this.drawPermanentMatchedLine(currentPairId);
+      }
+
       if (wordElem) {
-        wordElem.classList.remove("is-selected");
+        wordElem.classList.remove("is-selected", "is-drawing-source");
         wordElem.classList.add("is-matched", "matched-pulse");
       }
       if (defElem) {
-        defElem.classList.remove("is-selected");
+        defElem.classList.remove("is-selected", "is-drawing-target-hover");
         defElem.classList.add("is-matched", "matched-pulse");
       }
 
